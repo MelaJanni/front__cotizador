@@ -44,7 +44,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import url('http://fonts.cdnfonts.com/css/century-gothic');
+@import url('https://fonts.cdnfonts.com/css/century-gothic');
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); 
 .row__width{
   width: 100%;
