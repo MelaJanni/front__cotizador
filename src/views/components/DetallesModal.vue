@@ -8,7 +8,7 @@
                 <div class="col-12 d-flex justify-content-center align-items-center my-3 px-0">
                   <div class="row row__width justify-content-end">
                       <div class="col-12 col-lg-5  d-flex justify-content-between align-items-center px-0">
-                        <p>Puerto de Embarque (POL)</p>
+                        <p>Puerto de {{sentido}}</p>
                         <h4>{{$store.state.productos.embarqueSeleccionado}}</h4>
                       </div>
                   </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
                 <img src="../../../public/img/cotizador_icons/puerto.svg" alt="">
-                <p>Puerto de Destino: ZLC, Panamá</p>
+                <p>Puerto de {{sentido2}}</p>
                 </div>
                 <div class="col-12 col-lg-5 mt-3 mt-lg-0  d-flex justify-content-between align-items-center px-0">
                 <p>Longuitud max (metros)</p>
@@ -109,6 +109,14 @@ export default{
     azul_row:{
       type: Boolean,
       default: false
+    },
+    sentido:{
+      type: String,
+      default: 'Embarque (POL)'
+    },
+    sentido2:{
+      type: String,
+      default: 'Destino: ZLC, Panamá'
     }
   }
 }

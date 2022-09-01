@@ -5,7 +5,7 @@
         <div class="row justify-content-between">
           <form action="" method="POST" @submit.prevent="procesar" class="d-flex justify-content-between">
             <CotizadorModal sentido="Destino" sentido2="Embarque"/>
-            <DatosModal/>
+            <DatosModal tarea="importaciones"/>
           </form>
         </div>
       </div>
@@ -19,11 +19,6 @@ import CotizadorModal from './components/CotizadorModal.vue';
 import DatosModal from './components/DatosModal.vue';
 export default {
   name: 'ImportacionesView',
-  data(){
-    return{
-      importaciones: true,
-    }
-  },
   components: {
     CotizadorModal,
     DatosModal
@@ -33,6 +28,7 @@ export default {
     procesar(){
       this.getSubtotal(this.informacion.subtotal)
       this.getInformacion(this.informacion)
+      //this.$router.push('/detalles')
     },
   },
   //created(){
@@ -41,6 +37,10 @@ export default {
   computed:{
     ...mapState(['informacion'])
   },
+  created(){
+    this.$store.dispatch('getInformacion')
+    this.$store.dispatch('getSubtotal')
+  }
 }
 </script>
 <style lang="scss">

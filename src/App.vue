@@ -2,7 +2,7 @@
   <nav>
     <div class="row justify-content-center">
       <div class="col-2 col-lg-5 d-flex justify-content-start align-items-center px-0">
-        <img src="../public/img/cotizador_icons/logo.svg" alt="">
+        <router-link to="/"><img src="../public/img/cotizador_icons/logo.svg" alt=""></router-link> 
       </div>
       <div class="col-8 col-lg-5 d-flex justify-content-end align-items-center px-0">
         <router-link to="/">Cotizador de Importaciones</router-link> 

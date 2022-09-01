@@ -18,7 +18,9 @@
           <input type="number" placeholder="Ej. 310 221....." id="inputNumero" v-model="informacion.usuario.telefono">
         </div>
         <div class="col-12 my-4 mt-lg-5">
-          <button type="submit">Generar Cotización</button>
+          <router-link :to="{ name:'DetallesView', params:{id : tarea}}">
+            <button type="submit">Generar Cotización</button>
+          </router-link>
         </div>
     </div>
   </div>
@@ -32,6 +34,12 @@ export default{
     data(){
       return{
         
+      }
+    },
+    props:{
+      tarea:{
+        type: String,
+        default: 'importaciones',
       }
     },
     computed:{
@@ -96,6 +104,9 @@ export default{
     margin: 0;
     }
     input[type=number] { -moz-appearance:textfield; }
+    a{
+      text-decoration: none;
+    }
     button{
       border: 0;
       outline: none;

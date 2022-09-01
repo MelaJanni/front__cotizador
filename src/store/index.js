@@ -1,8 +1,7 @@
 import { createStore } from 'vuex'
-import {router} from "../main.js"
 import axios from "axios";
-const API__importaciones = 'https://cotizador.knowdo.studio/back/api/info_importaciones.php';
-const API_exportaciones ='https://cotizador.knowdo.studio/back/api/info_exportaciones.php';
+const API__importaciones ='https://cotizador.knowdo.studio/back/api/info_importaciones.php';
+const API__exportaciones ='https://cotizador.knowdo.studio/back/api/info_exportaciones.php';
 const envioDatosUsuarioCotizador = 'https://cotizador.knowdo.studio/back/cotizador/api/crear_usuario_pdf.php';
 let precioFinalPeso = ''
 let precioFinalLongitud = ''
@@ -15,11 +14,10 @@ let cantidadSelectLongitud = ''
 let cantidadSelectPeso = ''
 export default createStore({
   state: {
-    productos: {
+    productos:{
       puertos__embarque__store: '',
       longitudes__store: '', 
       pesos__store: '',
-      puertos__llegada__store: '',
       precios__longitud__store: '',
       precios__peso__store: '',
       longitudSelecionada: '',
@@ -27,6 +25,9 @@ export default createStore({
       volumen__store: '',
       volumenSeleccionado: '',
       embarqueSeleccionado: '',
+    },
+    productos2:{
+      puertos__llegada__store: '',
     },
     envioCotizador: null,
     informacion:{
@@ -54,14 +55,13 @@ export default createStore({
         preciosPeso:'',
       },
       valor:{ // precios x cantidad
-        valorFlete: '1',
+        valorFlete: '880',
         valorLongitud: '',
         valorVolumen: '',
         valorPeso:'',
       },
       subtotal:	'',
     },
-    resultados:'',
   },
   getters: {
   },
@@ -71,7 +71,7 @@ export default createStore({
     },
     setImportaciones(state, data){
       state.productos = data;
-      console.log(data)
+      //console.log(data)
       state.puertos__embarque__store = data[0].puertos_embarque;
       state.longitudes__store = data[0].long_max;
       state.pesos__store = data[0].peso;
@@ -81,10 +81,10 @@ export default createStore({
       
     },
     setExportaciones(state, data){
-      state.productos = data;
+      state.productos2 = data;
       //console.log(data)
-      state.response = response.data
-      state.puertos__llegada__store = response.data[0].puertos_llegada;
+      state.puertos__llegada__store = data[0].puertos_llegada;
+      //console.log(state.puertos__llegada__store)
     },
     setInformacion(state, data){
       data.push(state.informacion)
@@ -96,14 +96,16 @@ export default createStore({
     cantidadXPrecio(state, valorNuevo){
       cantidadSelectVolumen = state.informacion.cotizador.volumen
       // Cantidad de volumen seleccionada mandada a la bbdd
-      state.productos.volumenSelecionado = valorNuevo
+      state.productos.volumenSeleccionado = valorNuevo
       state.informacion.cantidad.cantidadVolumen = cantidadSelectVolumen
       precioVolumen = 2;
       precioFinalVolumen = cantidadSelectVolumen * precioVolumen
       // Precio unitario de volumen mandado a la bbdd
       state.informacion.precios.preciosVolumen = precioVolumen
-      // Valor de peso mandado a la bbdd
+      //console.log(precioFinalVolumen)
+      // Valor de volumen mandado a la bbdd
       state.informacion.valor.valorVolumen = precioFinalVolumen
+      //console.log(state.informacion.valor.valorVolumen)
     },
     longitudConsulta(state, valorNuevo){
       cantidadSelectLongitud = state.informacion.cotizador.longitud
@@ -159,27 +161,33 @@ export default createStore({
       state.informacion.valor.valorPeso = precioFinalPeso
     },
     setSubtotal(state, subTotal){
-      let sumaTotal = Number(state.informacion.valor.valorVolumen) + Number(state.informacion.valor.valorPeso)  + Number(state.informacion.valor.valorLongitud)  
+      let sumaTotal = Number(state.informacion.valor.valorFlete)+Number(state.informacion.valor.valorPeso == 'Por confirmar' ? 0 : state.informacion.valor.valorPeso)+Number(state.informacion.valor.valorLongitud == 'Por confirmar' ? 0 : state.informacion.valor.valorLongitud)+Number(precioFinalVolumen)
+      console.log(state.informacion.valor.valorVolumen)
+      console.log(state.informacion.valor.valorPeso)
+      console.log(state.informacion.valor.valorLongitud)
+      console.log(state.informacion.valor.valorFlete)
       state.informacion.subtotal = sumaTotal
-      //console.log(sumaTotal)
+      console.log(sumaTotal)
     },
   },
   actions: {
     async getImportaciones({commit}){
-      await axios.get(API__importaciones).then((result) => {
-        commit('setImportaciones', result.data)
+      await axios.get(API__importaciones).then((response) => {
+        commit('setImportaciones', response.data)
+        //console.log(response.data)
       })
       .catch(error => console.log(error))
     },
     async getExportaciones({commit}){
-      await axios.get(API_exportaciones).then((response) => {
+      await axios.get(API__exportaciones).then((response) => {
         commit('setExportaciones', response.data)
+        //console.log(response.data)
       })
       .catch(error => console.log(error))
     },
     async getInformacion({commit} , informacion){
       //Va a dar error pero es por la url, los datos se mandan correctamente!
-      await axios.post(API_exportaciones , informacion).then((response) => {
+      await axios.post(API__importaciones , informacion).then((response) => {
         commit('setInformacion', response.data)
       })
       .catch(error => console.log(error, 'No funciona getInformacion'))

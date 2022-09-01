@@ -20,12 +20,10 @@
                 <p>Puerto de {{sentido2}} (POL)</p>
                 </div>
               <div class="col-12 d-flex justify-content-start align-items-center  pb-4">
-                <select class="form-select" aria-label="Default select example" id="selectEmbarque" v-model="informacion.cotizador.embarque"
-                @change="changeEmbarque()">
-                    <option v-for="(puerto, index) in $store.state.puertos__embarque__store " :key="index" 
-                    :value="puerto" :class="{ active : importaciones }">{{puerto}}</option>
-                    <option v-for="(puertoLL, indexLL) in puertos__llegada" :key="indexLL" 
-                    :value="puertoLL" :class="{ active : exportaciones }">{{puertoLL}}</option>
+                <select class="form-select" aria-label="Default select example" id="selectEmbarque" v-model="informacion.cotizador.embarque" 
+                  @change="changeEmbarque()">
+                  <option v-for="(puerto, index) in $store.state.puertos__embarque__store " :key="index" :value="puerto" v-if="rutaName == 'ImportacionesView'">{{puerto}}</option>
+                  <option v-for="(puertoLL, indexLL) in $store.state.puertos__llegada__store" :key="indexLL" :value="puertoLL" v-else>{{puertoLL}}</option>
                 </select>
               </div>
           </div>
@@ -77,22 +75,13 @@ export default{
   name: 'CotizadorModal',
   data(){
     return{
-      response: null,
-      puertos__llegada: null,
+      rutaName : this.$route.name,
     }
   },
   props:{
     cotizador1:{
       type: String,
       default: 'importaciones',
-    },
-    importaciones:{
-      type: Boolean,
-      default: true,
-    },
-    exportaciones:{
-      type: Boolean,
-      default: false,
     },
     sentido:{
       type: String,
@@ -104,7 +93,8 @@ export default{
     }
   },
   created(){
-    this.$store.dispatch('getImportaciones', 'getExportaciones')
+    this.$store.dispatch('getImportaciones')
+    this.$store.dispatch('getExportaciones')
   },
   methods:{
     ...mapActions(['getImportaciones', 'getExportaciones','cantidadXPrecio', 'longitudConsulta', 'pesoConsulta', 'embarqueConsulta']),

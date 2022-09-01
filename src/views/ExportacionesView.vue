@@ -4,8 +4,8 @@
       <div class="col-10 d-flex justify-content-center align-items-center pb-5">
         <div class="row justify-content-between">
           <form action="" method="POST" @submit.prevent="procesar" class="d-flex justify-content-between">
-            <CotizadorModal cotizador1="exportaciones" :importaciones="false" :exportaciones="true" sentido="Embarque" sentido2="Destino"/>
-            <DatosModal/>
+            <CotizadorModal cotizador1="exportaciones" sentido="Embarque" sentido2="Destino" />
+            <DatosModal tarea="exportaciones"/>
           </form>
         </div>
       </div>
@@ -27,11 +27,16 @@ export default {
     procesar(){
       this.getSubtotal(this.informacion.subtotal)
       this.getInformacion(this.informacion)
+      //this.$router.push('/detalles')
     },
   },
   computed:{
     ...mapState(['informacion'])
   },
+  created(){
+    this.$store.dispatch('getInformacion')
+    this.$store.dispatch('getSubtotal')
+  }
 }
 </script>
 <style lang="scss">
