@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid justify-content-center">
     <div class="row justify-content-center">
-      <div class="col-10 d-flex">
-        <div class="row justify-content-between">
+      <div class="col-10 d-flex justify-content-center">
+        <div class="row justify-content-center justify-content-lg-between row__width">
           <DetallesModal 
           :cotizador2=" ruta == 'importaciones' ? 'importaciones' : 'exportaciones' " 
           :azul_row="ruta == 'importaciones' ? false : true"
@@ -15,6 +15,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import DetallesModal from './components/DetallesModal.vue';
 import TerminosModal from './components/TerminosModal.vue';
 export default {
@@ -28,8 +29,14 @@ export default {
         ruta : this.$route.params.id,
       }
     },
-    created(){
-      //console.log(this.ruta)
+    methods:{
+      ...mapActions(['getEspanol', 'getEnglish']),
+      cambiarEspanol(){
+        this.getEspanol()
+      },
+      cambiarEnglish(){
+        this.getEnglish()
+      },
     },
 }
 </script>

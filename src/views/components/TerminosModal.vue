@@ -2,99 +2,40 @@
     <div class="row justify-content-center">
         <div class="col-12 caja my-4">
             <h4 class="terminos">
-                Términos y condiciones
+              {{ $t("message.terminos", {}, { locale: $store.state.lang }) }}
                 <div class="span"></div>
+                
             </h4>
-            <ul class="mt-4 mt-lg-5">
-                <li>
-                Min. 1 CBM / Relación Peso Vol: 1 CBM = 1000 kgs // VIA SHENZEN Vol: 1 CBM = 500 kgs.	
-                </li>
-                <li>
-                Manejos TGD Panama USD 35.00 (Bill of Lading/Documentacion).	
-                </li>
-                <li>
-                Tarifas incluyen cargos IMO 2020.	
-                </li>
-                <li>
-                Todas las cargas están sujetas al cobro de Agency Fee de USD 8.00.		
-                </li>
-                <li>
-                Todas las cargas están sujetas al cobro de LCL Fee de USD 20.00 por CBM.		
-                </li>
-                <li>
-                **NUEVO CARGO: RECOVERY FEE $30.00 / TODAS LAS CARGAS ESTAN SUJETAS A ESTE CARGO A PARTIR DEL 1RO DE MAYO DE 2020 POR BL**.
-                </li>
-                <li>
-                DMC de Salida de CFZ $35.00 para cargas con destino final a Ciudad de Panama y Liquidadas (Opcional). 		
-                </li>
-                <li>
-                TARIFA NO INCLUYE: IMO - CUARENTENA - INSPECCIONES - FUMIGACION - ALMACENAJE - ADUANAS - SEGURO DE CARGA. 		
-                </li>
-                <li>
-                TARIFA NO INCLUYE : CERTIFICADOS FITOSANITARIOS - AUPSA ** APLICA RECARGO DE USD 50.00 USD POR INSPECCIÓN **.		
-                </li>
-                <li>
-                Tarifas validas para Carga General.
-                </li>
-                <li>
-                TODAS LAS CARGAS LCL DE EUROPA Y BRASIL TIENE UN CARGO ADICIONAL DE MANEJO DE IMPORTACION DE USD 45.00 POR BL.		
-                </li>
-                <li>
-                TODAS LAS CARGAS LCL DE EUROPA VIA ROTTERDAM APLICA UN MINIMO DE 3 CBM (APLICA MONEDA EN USD Y EUR). 		
-                </li>
-                <li>
-                Solicitud de Costos EXW DDU DDP Favor consultar con anterioridad.	
-                </li>
-                <li>
-                Toda carga LCL sera facturada de acuerdo a ETD (Fecha confirmada de Agente en Origen y Según Tarifario Vigente).		
-                </li>
-                <li>
-                Toda carga LCL via Hong Kong sera facturada de acuerdo a ETD de Hong Kong (Fecha confimada por el agente en Origen y Según Tarifario Vigente).		
-                </li>
-                <li>
-                Toda carga LCL via Busan sera facturada de acuerdo a ETD de Busan (Fecha confimada por el agente en Origen y Según Tarifario Vigente).		
-                </li>
-                <li>
-                Toda carga LCL via Shenzhen sera facturada de acuerdo a ETD de Shenzhen (Fecha confimada por el agente en Origen y Según Tarifario Vigente).		
-                </li>
-                <li>
-                ** TODA CARGA CON SOBREDIMENSION O SOBRE PESO DEBE CONSULTARSE CASO A CASO ** APLICAN RECARGOS **.
-                </li>
-                <li>
-                ** Cargas que excedan de las siguientes medidas : Largo 4 mts - Ancho: 2.0 mts / Alto : 2.0 mts **.		
-                </li>
-                <li>
-                ** Sobrepeso superior a 2 TON por paquete y/o 5 TON por embarque **. 		
-                </li>
-                <li>
-                Todas las Cargas Vía Hong Kong deben contar con Certificado de Origen ( C.O. ) y Fumigadas de llevar Madera.		
-                </li>
-                <li>
-                Toda carga debe venir correctamente embaladas, de no ser así se debe pedir cotizacion para su embalaje.		
-                </li>
-                <li>
-                ** CARGA PELIGROSA DEBE CONSULTARSE CASO A CASO **.		
-                </li>
-                <li>
-                ** Carga peligrosa Clase 1 y 7, Armas, municiones y explosivos están ESTRICTAMENTE PROHÍBIDOS **.		
-                </li>
-                <li>
-                Para productos de: Consumo humano, Licores, Obras de Arte, Efectos personales, Productos Veterinarios ** Consultar caso a caso **.
-                </li>
-            </ul>
+            <div class="mt-4 mt-lg-5 ul">
+                <div v-if="rutaName == 'ImportacionesView'" v-html="$store.state.terminosImports.terminos"></div>
+                <div v-else v-html="$store.state.terminosExports.terminos"></div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default{
   name: 'TerminosModal' ,
-    props:{
-        cotizador: {
-          type: String,
-          default: 'importaciones,'
-        }
+  data(){
+    return{
+      rutaName : this.$route.name,
     }
+  },
+  props:{
+    cotizador: {
+      type: String,
+      default: 'importaciones,'
+    }
+  },
+  created(){
+    this.$store.dispatch('getTerminosImportaciones')
+  },
+  methods:{
+    ...mapActions['getTerminosImportaciones']
+  },
 }
 </script>
 
@@ -123,9 +64,9 @@ export default{
     border-radius: 23px;
     margin-top: 30px;
   }
-  ul{
+  .ul{
     padding-left: 20px;
-    li{
+    div{
       text-align: start;
       font-family: 'Century Gothic';
       font-weight: 400;
@@ -141,6 +82,17 @@ export default{
     }
     .span{
       margin-top: 10px;
+    }
+  }
+  @media (max-width: 1600px){
+    .terminos{
+      font-size: 18px;
+    }
+    .span{
+      margin-top: 20px !important;
+    }
+    .ul{
+      margin-top: 40px !important;
     }
   }
 }

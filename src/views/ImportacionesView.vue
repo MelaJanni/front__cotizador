@@ -1,13 +1,21 @@
 <template>
   <div class="container-fluid justify-content-center">
     <div class="row justify-content-center">
-      <div class="col-10 d-flex justify-content-center align-items-center pb-5">
-        <div class="row justify-content-between">
-          <form action="" method="POST" @submit.prevent="procesar" class="d-flex justify-content-between">
-            <CotizadorModal sentido="Destino" sentido2="Embarque"/>
-            <DatosModal tarea="importaciones"/>
-          </form>
+      <div class="col-10 d-flex flex-column justify-content-center align-items-center pb-2" >
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%" v-if="alertDanger">
+          <strong>{{$store.state.msgInvalido}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        <form action="" method="POST" @submit.prevent="procesar" class="row d-flex justify-content-between">
+          <CotizadorModal sentido="Destino" sentido2="Embarque"/>
+          <DatosModal tarea="importaciones"/>
+        </form>
+      </div>
+    </div>
+    <div class="row footer">
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <button @click="cambiarEspanol">Español</button>
+        <button @click="cambiarEnglish">English</button>
       </div>
     </div>
   </div>
@@ -21,25 +29,33 @@ export default {
   name: 'ImportacionesView',
   components: {
     CotizadorModal,
-    DatosModal
+    DatosModal,
   },
   methods:{
-    ...mapActions(['getInformacion', 'getSubtotal']),
+    ...mapActions(['getInformacion', 'getSubtotal', 'getEspanol', 'getEnglish', 'limpiarFormImportaciones', 'validarImportaciones']),
     procesar(){
-      this.getSubtotal(this.informacion.subtotal)
-      this.getInformacion(this.informacion)
-      //this.$router.push('/detalles')
+      this.validarImportaciones()
+      if(this.validacion == true){
+        this.getSubtotal(this.informacion.subtotal)
+        this.getInformacion(this.informacion)
+        this.$router.push('/detalles/importaciones')
+      }else{
+        console.log('entra al else importacion')
+        console.log(this.informacion.cotizador.embarque)
+      }
+    },
+    cambiarEspanol(){
+        this.getEspanol()
+    },
+    cambiarEnglish(){
+        this.getEnglish()
     },
   },
-  //created(){
-    //this.$store.dispatch('procesarFormulario', this.informacion)
-  //},
   computed:{
-    ...mapState(['informacion'])
+    ...mapState(['informacion', 'informacion.subtotal', 'lang', 'alertDanger', 'validacion'])
   },
-  created(){
-    this.$store.dispatch('getInformacion')
-    this.$store.dispatch('getSubtotal')
+  mounted(){
+    this.limpiarFormImportaciones()
   }
 }
 </script>
@@ -59,5 +75,19 @@ body{
 }
 h1, h2, h3, h4, h5, h6, p{
   margin: 0 !important;
+}
+.footer{
+  background-color: #eeeded;
+  min-height: 7vh;
+  button{
+    border: 0;
+    background-color: transparent;
+    color: #FF0000;
+    font-family: 'Century Gothic', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    text-decoration: underline;
+    margin: 0px 15px;
+  }
 }
 </style>

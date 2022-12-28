@@ -1,26 +1,27 @@
 <template>
-  <div class="col-12 col-xxl- caja ">
+  <div class="col-12 col-xxl-7 caja ">
     <div class="row">
         <div class="col-12 d-flex justify-content-start align-items-center">
           <img src="../../../public/img/cotizador_icons/users.svg" alt="">
-          <h4>Ingresa tus datos </h4>
+          <h4>{{ $t("message.datos", {}, { locale: $store.state.lang }) }}</h4>
         </div>
         <div class="col-12 d-flex flex-column justify-content-center align-items-start mt-3 mt-lg-5">
-          <h5>Nombre completo:</h5>
-          <input type="text" placeholder="Ej. Luis Rincon" id="inputName" v-model="informacion.usuario.nombre">
+          <h5>{{ $t("message.nombre", {}, { locale: $store.state.lang }) }}</h5>
+          <input type="text" placeholder="Ej. Luis Rincon" id="inputName" v-if="rutaName == 'ImportacionesView'" v-model="informacion.usuario.nombre" >
+          <input type="text" placeholder="Ej. Luis Rincon" id="inputName" v-else v-model="informacionExportacion.usuario.nombre" >
         </div>
         <div class="col-12 d-flex flex-column justify-content-center align-items-start mt-3">
-          <h5>Correo electrónico:</h5>
-          <input type="mail" placeholder="Ej. Ejemplo@gmail.com" id="inputMail" v-model="informacion.usuario.email">
+          <h5>{{ $t("message.email", {}, { locale: $store.state.lang }) }}</h5>
+          <input type="email" placeholder="Ej. Ejemplo@gmail.com" id="inputMail" v-if="rutaName == 'ImportacionesView'" v-model="informacion.usuario.email" >
+          <input type="email" placeholder="Ej. Ejemplo@gmail.com" id="inputMail" v-else v-model="informacionExportacion.usuario.email" >
         </div>
         <div class="col-12 d-flex flex-column justify-content-center align-items-start mt-3">
-          <h5>Teléfono:</h5>
-          <input type="number" placeholder="Ej. 310 221....." id="inputNumero" v-model="informacion.usuario.telefono">
+          <h5>{{ $t("message.telefono", {}, { locale: $store.state.lang }) }}</h5>
+          <input type="number" placeholder="Ej. 310 221....." id="inputNumero" v-if="rutaName == 'ImportacionesView'" v-model="informacion.usuario.telefono">
+          <input type="number" placeholder="Ej. 310 221....." id="inputNumero" v-else v-model="informacionExportacion.usuario.telefono" >
         </div>
         <div class="col-12 my-4 mt-lg-5">
-          <router-link :to="{ name:'DetallesView', params:{id : tarea}}">
-            <button type="submit">Generar Cotización</button>
-          </router-link>
+            <button type="submit">{{ $t("message.generar", {}, { locale: $store.state.lang }) }}</button>
         </div>
     </div>
   </div>
@@ -33,7 +34,7 @@ export default{
     name: 'DatosModal',
     data(){
       return{
-        
+        rutaName : this.$route.name,
       }
     },
     props:{
@@ -43,7 +44,7 @@ export default{
       }
     },
     computed:{
-      ...mapState(['usuario', 'informacion']),
+      ...mapState(['usuario', 'informacion', 'informacionExportacion']),
     }
 }
 </script>
@@ -57,7 +58,7 @@ export default{
     width: 100%;
     border-radius: 20px;
     padding: 60px 60px;
-    @media (min-width: 1440px) {
+    @media (min-width: 992px) {
       max-width: 48%;
     }
     h4{
@@ -82,6 +83,7 @@ export default{
       border-radius: 10px;
       width: 100%;
       height: 7vh;
+      min-height: 50px;
       padding-left: 30px;
       font-family: 'Poppins';
       font-weight: 400;
@@ -91,8 +93,8 @@ export default{
       &:focus{
         outline: none;
         box-shadow: none;
-        border-color: #FF0000;
-        color: #FF0000;
+        border-color: #000;
+        color: #000;
       }
       &::placeholder{
         color: #b0b0b0be;
@@ -130,11 +132,11 @@ export default{
       h4{
         font-size: 24px;
       }
-      h5, input{
-        font-size: 14px;
-      }
       h5{
         padding-bottom: 10px;
+      }
+      h5, input{
+        font-size: 14px;
       }
       input{
         height: 5vh;
@@ -142,6 +144,18 @@ export default{
       button{
         font-size: 16px;
         height: 5vh;
+      }
+    }
+    
+    @media (max-width: 1600px) {
+      h4{
+        font-size: 28px;
+      }
+      h5, input{
+        font-size: 16px;
+      }
+      button{
+        font-size: 18px;
       }
     }
     @media (min-width: 992px) {

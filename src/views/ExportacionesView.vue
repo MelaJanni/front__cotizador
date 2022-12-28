@@ -1,13 +1,21 @@
 <template>
   <div class="container-fluid justify-content-center">
     <div class="row justify-content-center">
-      <div class="col-10 d-flex justify-content-center align-items-center pb-5">
-        <div class="row justify-content-between">
-          <form action="" method="POST" @submit.prevent="procesar" class="d-flex justify-content-between">
+      <div class="col-10 d-flex flex-column justify-content-center align-items-center pb-2">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%" v-if="alertDanger">
+          <strong>{{$store.state.msgInvalido}}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+          <form action="" method="POST" @submit.prevent="procesar2" class="row d-flex justify-content-between">
             <CotizadorModal cotizador1="exportaciones" sentido="Embarque" sentido2="Destino" />
             <DatosModal tarea="exportaciones"/>
           </form>
-        </div>
+      </div>
+    </div>
+    <div class="row footer">
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <button @click="cambiarEspanol">Español</button>
+        <button @click="cambiarEnglish">English</button>
       </div>
     </div>
   </div>
@@ -23,19 +31,30 @@ export default {
     CotizadorModal
   },
   methods:{
-    ...mapActions(['getInformacion', 'getSubtotal']),
-    procesar(){
-      this.getSubtotal(this.informacion.subtotal)
-      this.getInformacion(this.informacion)
-      //this.$router.push('/detalles')
+    ...mapActions(['getInformacionExportacion', 'getSubtotalExportacion', 'getEspanol', 'getEnglish', 'limpiarFormExportaciones', 'validarExportaciones']),
+    procesar2(){
+      this.validarExportaciones()
+      if ( this.validacion == true){
+        this.getSubtotalExportacion(this.informacionExportacion.subtotal)
+        this.getInformacionExportacion(this.informacionExportacion)
+        //console.log(this.informacionExportacion)
+        this.$router.push('/detalles/exportaciones')
+      }else{
+        console.log('entra al else')
+      }
+    },
+    cambiarEspanol(){
+      this.getEspanol()
+    },
+    cambiarEnglish(){
+      this.getEnglish()
     },
   },
   computed:{
-    ...mapState(['informacion'])
+    ...mapState(['informacionExportacion', 'informacionExportacion.subtotal', 'alertDanger', 'validacion'])
   },
-  created(){
-    this.$store.dispatch('getInformacion')
-    this.$store.dispatch('getSubtotal')
+  mounted(){
+    this.limpiarFormExportaciones()
   }
 }
 </script>

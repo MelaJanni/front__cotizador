@@ -21,7 +21,6 @@ const routes = [
     path: '/exportaciones',
     name: 'ExportacionesView',
     component: ExportacionesView,
-    
   },
 ]
 

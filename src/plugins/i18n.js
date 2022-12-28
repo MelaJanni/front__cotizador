@@ -1,0 +1,12 @@
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n)
+const messages = {
+  es: {},
+  en: {}
+}
+export const i18n = new VueI18n({
+    locale: window.navigator.language.split('-')[0],
+    fallbackLocale: 'en',
+    messages
+})
