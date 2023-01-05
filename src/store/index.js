@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import axios from "axios";
 
 
-const url = 'https://uxmonkey.co'
+const url = 'https://expertmonkeys.com'
 const API__importaciones =url+'/back/api/info_importaciones.php';
 const API__exportaciones =url+'/back/api/info_exportaciones.php';
 const envioImportacion =  url+'/back/api/crear_usuario_pdf_importacion.php';
@@ -42,7 +42,7 @@ export default createStore({
     productos2:{
       puertos__llegada__store: '',
       destinoSeleccionado: {
-        embarque:'',
+        destino:'',
         index: '',
       },
       longitudes__storeEx: '', 
@@ -124,6 +124,7 @@ export default createStore({
         valorPeso:'',
       },
       subtotal:	'',
+      label: '',
     },
     lang: window.navigator.language.split('-')[0],
     terminosImports: {
@@ -144,6 +145,7 @@ export default createStore({
     alertDanger: false,
     validacion : '',
     parametros: '',
+    label: [],
   },
   getters: {
   },
@@ -178,6 +180,9 @@ export default createStore({
       state.productos2.precios__peso__storeEx = data[0].peso_precio
       state.productos2.precioVolumenStoreEx = data[0].volumen
       state.informacionExportacion.precios.precioFlete = data[0].precioFlete
+      state.label = data[0].label
+      //console.log(data[0].label)
+      //console.log(state.informacionExportacion.label = data[0].label[state.productos2.destinoSeleccionado.index])
     },
     embarqueSeleccionado(state, valorNuevo){
       state.productos.embarqueSeleccionadoIm = valorNuevo
@@ -380,7 +385,7 @@ export default createStore({
     setTerminos(state, data){
       state.terminosImports.terminos = data[0].terminos;
       state.terminosImports.validez = data[0].fecha_validez;
-      //console.log(data)
+      //console.log(data, 'data de validez')
     },
     setTerminosExports(state, data){
       state.terminosExports.terminos = data[0].terminos;
@@ -389,7 +394,6 @@ export default createStore({
     },
     setUrlImportacion(state, data){
       state.urlImportacion = data
-      //console.log(state.urlImportacion)
     },
     setUrlExportacion(state, data){
       state.urlExportacion = data
@@ -605,14 +609,14 @@ export default createStore({
     async getImportaciones({commit}){
       await axios.get(API__importaciones).then((response) => {
         commit('setImportaciones', response.data)
-        //console.log(response.data)
+        //console.log(response.data , 'data importaciones')
       })
       .catch(error => console.log(error))
     },
     async getExportaciones({commit}){
       await axios.get(API__exportaciones).then((response) => {
         commit('setExportaciones', response.data)
-        //console.log(response.data)
+        //console.log(response.data, 'data exportaciones')
       })
       .catch(error => console.log(error))
     },
@@ -620,21 +624,20 @@ export default createStore({
       console.log(informacion)
       commit('setLang')  
       await axios.post(envioImportacion , {informacion}).then((response) => {
-        
-        console.log(response.data)
+        //console.log(response)
+        //console.log(response.data.url, 'En axios')
         commit('setUrlImportacion', response.data.url)
       })
       .catch(error => console.log(error, 'No funciona getInformacion'))
     },
     async getInformacionExportacion({commit} , informacionExportacion){
-      console.log(informacionExportacion)
       commit('setLangExportacion')  
       let informacion = {
-          
         'informacion' : informacionExportacion
       }
+      //console.log(informacion, ' informacion')
       await axios.post(envioExportacion , informacion).then((response) => {
-        console.log(response.data)
+        //console.log(response.data)
         commit('setUrlExportacion', response.data.url)
       }) 
       .catch(error => console.log(error, 'No funciona getInformacionExportacion'))
@@ -642,14 +645,14 @@ export default createStore({
     async getTerminosImportaciones({commit}){
       await axios.get(terminosImp).then((response) => {
        commit('setTerminos', response.data)
-       //console.log(response.data)
+       //console.log(response.data , 'terminos importaciones')
      })
      .catch(error => console.log(error, 'No funciona terminosImportaciones'))
     },
-    async getTerminosImportaciones({commit}){
+    async getTerminosExportaciones({commit}){
       axios.get(terminosEx).then((response) => {
       commit('setTerminosExports', response.data)
-      //console.log(response.data)
+      console.log(response.data)
     })
     .catch(error => console.log(error, 'No funciona terminosImportaciones'))
     },

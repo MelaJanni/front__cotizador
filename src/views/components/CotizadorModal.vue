@@ -7,6 +7,9 @@
             <div v-else>  {{ $t("message.exportaciones", {}, { locale: $store.state.lang }) }}</div>
           </h2>
           <h3>{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</h3>
+          <!--<h3 v-if="rutaName == 'ImportacionesView'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</h3>
+          <h3 v-else-if="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</h3>
+          <h3 v-else="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</h3>--->
           <span></span>
         </div>
         <div class="col-12 d-flex flex-column justify-content-center align-items-center mt-5 px-0">
@@ -112,6 +115,9 @@ export default{
       }
     )
   },
+  computed:{
+    ...mapState(['cotizador', 'informacion', 'informacionExportacion', 'productos', 'productos2', 'parametros', 'label']),
+  },
   components: {
     Select2,
   },
@@ -214,9 +220,7 @@ export default{
       }
     },
   },
-  computed:{
-    ...mapState(['cotizador', 'informacion', 'informacionExportacion', 'productos', 'productos2', 'parametros']),
-  },
+  
 }
 </script>
 

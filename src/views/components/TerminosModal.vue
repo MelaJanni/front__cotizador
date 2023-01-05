@@ -31,10 +31,11 @@ export default{
     }
   },
   created(){
-    this.$store.dispatch('getTerminosImportaciones')
+    this.$store.dispatch('getTerminosImportaciones'),
+    this.$store.dispatch('getTerminosExportaciones')
   },
   methods:{
-    ...mapActions['getTerminosImportaciones']
+    ...mapActions['getTerminosImportaciones', 'getTerminosExportaciones']
   },
 }
 </script>

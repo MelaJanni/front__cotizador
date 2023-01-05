@@ -20,7 +20,9 @@
                 </div>
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
                   <img src="../../../public/img/cotizador_icons/ltl.svg" alt="">
-                  <p>{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-if=" calcularRuta">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else-if="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
                 </div>
                 <div class="col-12 col-lg-5 mt-3 mt-lg-0  d-flex justify-content-between align-items-center px-0">
                   <p>{{ $t("message.volumen2", {}, { locale: $store.state.lang }) }}</p>
@@ -187,7 +189,7 @@ export default{
     },
   },
   computed: {
-    ...mapState(['informacion', 'productos', 'urlImportacion', 'informacionExportacion', 'urlExportacion',]),
+    ...mapState(['informacion', 'productos', 'urlImportacion', 'informacionExportacion', 'urlExportacion', 'productos2']),
     calcularRuta(){
       return this.cotizador2 === 'importaciones'
     },
