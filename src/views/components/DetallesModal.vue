@@ -14,20 +14,20 @@
                         <p v-if="calcularRuta">{{ $t("message.puertoEmbarque", {}, { locale: $store.state.lang }) }}</p>
                         <p  v-else>{{ $t("message.puertoDestino", {}, { locale: $store.state.lang }) }}</p>
                         <h4 v-if="calcularRuta">{{$store.state.productos.embarqueSeleccionadoIm.embarque}}</h4>
-                        <h4 v-else>{{$store.state.productos2.destinoSeleccionado.destino}}</h4>
+                        <h4 v-else>{{$store.state.informacionExportacion.cotizador.destino.destino}}</h4>
                       </div>
                   </div>
                 </div>
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
                   <img src="../../../public/img/cotizador_icons/ltl.svg" alt="">
-                  <p v-if=" calcularRuta">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
-                  <p v-else-if="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
-                  <p v-else="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-if=" calcularRuta">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else-if="$store.state.label[$store.state.informacionExportacion.cotizador.destino.index] == 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else="$store.state.label[$store.state.informacionExportacion.cotizador.destino.index] == 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
                 </div>
                 <div class="col-12 col-lg-5 mt-3 mt-lg-0  d-flex justify-content-between align-items-center px-0">
                   <p>{{ $t("message.volumen2", {}, { locale: $store.state.lang }) }}</p>
                   <h4 v-if="calcularRuta">{{$store.state.productos.volumenSeleccionado}}</h4>
-                  <h4 v-else>{{$store.state.productos2.volumenSeleccionado}}</h4>
+                  <h4 v-else>{{$store.state.informacionExportacion.cantidad.cantidadVolumen}}</h4>
                 </div>
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
                   <img src="../../../public/img/cotizador_icons/puerto.svg" alt="">
@@ -70,7 +70,7 @@
                     <div class="col-4 div_gris"><p>{{ $t("message.flete", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
                       <p v-if="calcularRuta">{{$store.state.productos.volumenSeleccionado}}</p>
-                      <p v-else>{{$store.state.productos2.volumenSeleccionado}}</p>
+                      <p v-else>{{$store.state.informacionExportacion.cantidad.cantidadVolumen}}</p>
                     </div>
                     <div class="col-2 div_gris">
                       <h6 v-if="calcularRuta">$ {{$store.state.nuevoValorEmbarque}}</h6>
@@ -98,7 +98,7 @@
                     <div class="col-4 div_gris"><p>{{ $t("message.sobreDim", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
                       <p v-if="calcularRuta">{{$store.state.productos.longitudSeleccionada}}</p>
-                      <p v-else>{{$store.state.productos2.longitudSeleccionada}}</p>
+                      <p v-else>{{$store.state.informacionExportacion.cantidad.cantidadLongitud}}</p>
                     </div>
                     <div class="col-2 div_gris">
                       <h6 v-if="calcularRuta"> {{$store.state.informacion.precios.precioLongitud}}</h6>
@@ -113,7 +113,7 @@
                     <div class="col-4 div_gris"><p>{{ $t("message.sobrePeso", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
                       <p v-if="calcularRuta">{{$store.state.productos.pesoSeleccionado}}</p>
-                      <p v-else>{{$store.state.productos2.pesoSeleccionado}}</p>
+                      <p v-else>{{$store.state.informacionExportacion.cantidad.cantidadPeso}}</p>
                     </div>
                     <div class="col-2 div_gris">
                       <h6 v-if="calcularRuta"> {{$store.state.informacion.precios.precioPeso}}</h6>

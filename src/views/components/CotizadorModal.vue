@@ -6,18 +6,14 @@
             <div v-if="rutaName == 'ImportacionesView'">  {{ $t("message.importaciones", {}, { locale: $store.state.lang }) }}</div>
             <div v-else>  {{ $t("message.exportaciones", {}, { locale: $store.state.lang }) }}</div>
           </h2>
-          <h3>{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</h3>
-          <!--<h3 v-if="rutaName == 'ImportacionesView'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</h3>
-          <h3 v-else-if="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</h3>
-          <h3 v-else="$store.state.label[$store.state.productos2.destinoSeleccionado.index] == 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</h3>--->
-          <span></span>
+          <span class="mt-4"></span>
         </div>
         <div class="col-12 d-flex flex-column justify-content-center align-items-center mt-5 px-0">
           <div class="row row__width">
               <div class="col-6 col-lg-8 d-flex justify-content-start align-items-center">
                 <img src="../../../public/img/cotizador_icons/puerto.svg" alt="">
                 <p v-if="rutaName == 'ImportacionesView'">  {{ $t("message.puertoDestino", {}, { locale: $store.state.lang }) }}</p>
-                <p  v-else >  {{ $t("message.puertoEmbarque", {}, { locale: $store.state.lang }) }}</p>
+                <p  v-else >  {{ $t("message.puertoEmbarque", {}, { locale: $store.state.lang }) }} </p>
               </div>
               <div class="col-6 col-lg-4 justify-content-end align-items-center">
                 <h6>ZLC, Panamá</h6>
@@ -25,7 +21,7 @@
               <div class="col-12 d-flex justify-content-start align-items-center  py-4">
                 <img src="../../../public/img/cotizador_icons/embarque.svg" alt="">
                 <p v-if="rutaName == 'ImportacionesView'">  {{ $t("message.puertoEmbarque", {}, { locale: $store.state.lang }) }}</p>
-                <p v-else  >  {{ $t("message.puertoDestino", {}, { locale: $store.state.lang }) }}</p>
+                <p v-else  >  {{ $t("message.puertoDestino", {}, { locale: $store.state.lang }) }} </p>
               </div>
               <div class="col-12 d-flex flex-column justify-content-start align-items-center pb-4">
                 <select class="form-select" data-display="Select" id="selectImportaciones" aria-label="Default select example" v-if="rutaName == 'ImportacionesView'" v-model="informacion.cotizador.embarque" @change="changeEmbarque(), calcPrecioFleteImportacion()">
@@ -80,7 +76,9 @@
               </div>
               
           </div>
+          
         </div>
+        
     </div>
   </div>
 </template>
@@ -96,11 +94,10 @@ export default{
       localStorage : ''
     }
   },
-  created(){
+  beforeMount(){
     this.getImportaciones().then(() => {
       if(this.$route.query != undefined && this.$route.query.importaciones!=undefined){
       //console.log('entro a la condicion de tener parametros')
-      
         this.LocalStorage()
       }
       this.preguntaRuta()
@@ -154,14 +151,16 @@ export default{
       this.embarqueConsulta(this.informacion.cotizador.embarque)
     },
     changeLongitudExportacion(){
-      
       this.longitudConsultaExportacion(this.informacionExportacion.cotizador.longitud)
+      console.log(this.informacionExportacion.cotizador.longitud, 'change')
     },
     changeCantidadExportacion(){
       this.cantidadXPrecioExportacion(this.informacionExportacion.cotizador.volumen)
+      //console.log(this.informacionExportacion.cotizador.volumen, 'change')
     },
     changePesoExportacion(){
       this.pesoConsultaExportacion(this.informacionExportacion.cotizador.peso)
+      console.log(this.informacionExportacion.cotizador.peso, 'change')
     },
     changeDestinoExportacion(){
       this.destinoConsultaExportacion(this.informacionExportacion.cotizador.destino)

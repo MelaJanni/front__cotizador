@@ -36,12 +36,12 @@ export default {
       this.validarExportaciones()
       if ( this.validacion == true){
         this.getSubtotalExportacion(this.informacionExportacion.subtotal)
-        this.informacionExportacion.label = this.label[this.informacionExportacion.cotizador.destino.index]
+        //this.informacionExportacion.label = this.label[this.informacionExportacion.cotizador.destino.index]
         this.getInformacionExportacion(this.informacionExportacion)
-        //console.log(this.informacionExportacion)
+        console.log(this.informacionExportacion)
         this.$router.push('/detalles/exportaciones')
       }else{
-        console.log('entra al else')
+        //console.log('entra al else')
       }
     },
     cambiarEspanol(){
@@ -54,9 +54,6 @@ export default {
   computed:{
     ...mapState(['informacionExportacion', 'informacionExportacion.subtotal', 'alertDanger', 'validacion', 'label', 'productos2'])
   },
-  mounted(){
-    this.limpiarFormExportaciones()
-  }
 }
 </script>
 <style lang="scss">

@@ -179,6 +179,7 @@ export default createStore({
       state.productos2.precios__longitud__storeEx = data[0].long_precio;
       state.productos2.precios__peso__storeEx = data[0].peso_precio
       state.productos2.precioVolumenStoreEx = data[0].volumen
+      //console.log(state.productos2.precioVolumenStoreEx)
       state.informacionExportacion.precios.precioFlete = data[0].precioFlete
       state.label = data[0].label
       //console.log(data[0].label)
@@ -189,9 +190,9 @@ export default createStore({
       //console.log(state.productos.embarqueSeleccionadoIm)
     },
     setCalcPrecioFleteImportacion(state, valor){
-      //console.log(valor)
+      console.log(valor)
       let embarqueArray = valor.split(' ')
-      state.nuevoValorEmbarque = embarqueArray[1]
+      state.nuevoValorEmbarque = embarqueArray[0]
       state.informacion.precios.precioFlete = state.nuevoValorEmbarque
     },
     cantidadXPrecio(state, valorNuevo){
@@ -203,13 +204,17 @@ export default createStore({
       //console.log(state.informacion.cantidad.cantidadVolumen)
       //console.log(cantidadSelectVolumen)
       precioFinalVolumen = cantidadSelectVolumen * state.productos.precioVolumenStore
+      //console.log(state.productos.precioVolumenStore , 'precio volumen')
+      //console.log(precioFinalVolumen , 'precio final volumen')
       // Precio unitario de volumen mandado a la bbdd
       state.informacion.precios.precioVolumen = state.productos.precioVolumenStore
       // Valor de volumen mandado a la bbdd
       state.informacion.valor.valorVolumen = precioFinalVolumen
       // Acá se multiplica la cantidad ingresada en volumen x el precio del servicio del flete = valor del fletes
       state.informacion.valor.valorFlete = cantidadSelectVolumen * state.nuevoValorEmbarque
-      //console.log(state.informacion.valor.valorVolumen)
+      console.log(cantidadSelectVolumen)
+      console.log(state.nuevoValorEmbarque)
+      console.log(state.informacion.valor.valorFlete)
     },
     longitudConsulta(state, valorNuevo){
       cantidadSelectLongitud = state.informacion.cotizador.longitud
@@ -290,25 +295,30 @@ export default createStore({
     },
     cantidadXPrecioExportacion(state, valorNuevo){
       cantidadSelectVolumen = state.informacionExportacion.cotizador.volumen
+      console.log(state.informacionExportacion.cotizador.volumen , 'volumen')
+      console.log(cantidadSelectVolumen ,'cantidad volumen')
       // Cantidad de volumen seleccionada mandada a la bbdd
       state.productos2.volumenSeleccionado = cantidadSelectVolumen
       state.informacionExportacion.cantidad.cantidadFlete = cantidadSelectVolumen
       state.informacionExportacion.cantidad.cantidadVolumen = cantidadSelectVolumen
-      precioFinalVolumen = cantidadSelectVolumen * state.precioVolumenStoreEx
-      //console.log(precioFinalVolumen)
+      precioFinalVolumen = cantidadSelectVolumen * state.productos2.precioVolumenStoreEx
+      //console.log(cantidadSelectVolumen , 'cantidad')
+      //console.log(state.productos2.precioVolumenStoreEx , 'precio volumen')
+      //console.log(precioFinalVolumen , 'precio final volumen')
       // Precio unitario de volumen mandado a la bbdd
-      state.informacionExportacion.precios.precioVolumen = state.precioVolumenStoreEx
+      state.informacionExportacion.precios.precioVolumen = state.productos2.precioVolumenStoreEx
       // Valor de volumen mandado a la bbdd
       state.informacionExportacion.valor.valorVolumen = precioFinalVolumen
-
       // Acá se multiplica la cantidad ingresada en volumen x el precio del servicio del flete = valor del flete
-      //console.log(state.nuevoValorDestino)
+      //console.log(state.nuevoValorDestino , 'valor volumen')
       state.informacionExportacion.valor.valorFlete = cantidadSelectVolumen * state.nuevoValorDestino
       //console.log(state.nuevoValorDestino)
       //console.log(state.informacionExportacion.valor.valorFlete)
+      //console.log(cantidadSelectVolumen)
     },
     longitudConsultaExportacion(state, valorNuevo){
       cantidadSelectLongitud = state.informacionExportacion.cotizador.longitud
+      //console.log(cantidadSelectLongitud , 'exportacion')
       state.productos2.longitudSeleccionada = cantidadSelectLongitud
       
       // Cantidad de longitud seleccionada mandada a la bbdd
@@ -465,47 +475,47 @@ export default createStore({
         },
         subtotal:	'',
       }
-      //console.log(state.informacion)
+      //console.log(state.informacion, 'limipioIm')
     },
     setlimpiarFormExportaciones(state){
       //console.log(state.informacionExportacion)
-        state.informacionExportacion = {
-          lang:'',
-          usuario: {
-            nombre: '',
-            email:'',
-            telefono:'',
-          },
-          cotizador:{
-            destino: {
-              destino: '',
-              index: '', 
-            }, 
-            volumen: '',
-            longitud:'',
-            peso: '',
-          },  
-          cantidad:{
-            cantidadFlete: '',
-            cantidadLongitud: '', 
-            cantidadVolumen: '',
-            cantidadPeso:'',
-          },
-          precios:{
-            precioFlete: [],
-            precioLongitud: '',
-            precioVolumen: '',
-            precioPeso:'',
-          },
-          valor:{
-            valorFlete: '',
-            valorLongitud: '',
-            valorVolumen: '',
-            valorPeso:'',
-          },
-          subtotal:	'',
-        }
-        //console.log(state.informacionExportacion)
+      state.informacionExportacion = {
+        lang:'',
+        usuario: {
+          nombre: '',
+          email:'',
+          telefono:'',
+        },
+        cotizador:{
+          destino: {
+            destino: '',
+            index: '', 
+          }, 
+          volumen: '',
+          longitud:'',
+          peso: '',
+        },  
+        cantidad:{
+          cantidadFlete: '',
+          cantidadLongitud: '', 
+          cantidadVolumen: '',
+          cantidadPeso:'',
+        },
+        precios:{
+          precioFlete: [],
+          precioLongitud: '',
+          precioVolumen: '',
+          precioPeso:'',
+        },
+        valor:{
+          valorFlete: '',
+          valorLongitud: '',
+          valorVolumen: '',
+          valorPeso:'',
+        },
+        subtotal:	'',
+      }
+      //console.log(state.informacionExportacion)
     },
     setValidarImportaciones(state){
       if(state.informacion.cotizador.embarque !== '' && state.informacion.cotizador.volumen !== '' && state.informacion.cotizador.longitud !== '' && 
@@ -543,11 +553,14 @@ export default createStore({
     },
     setParamsMutation(state, params){
       if(params.importaciones == 'true'){
-        console.log(params.puertoE)
+        //console.log(params)
+        //console.log(params.puertoE)
         state.informacion.cotizador.longitud = state.productos.longitudes__store[Number(params.long)] 
-        //console.log(state.productos.longitudes__store[Number(params.long)] )
+        //console.log(state.productos.longitudes__store[Number(params.long)])
         state.informacion.cotizador.peso  = state.productos.pesos__store[Number(params.peso)]
+        //console.log(state.productos.pesos__store[Number(params.peso)])
         state.informacion.cotizador.volumen = params.vol
+        //console.log(params.vol)
         state.lang = params.lang
         state.informacion.lang = params.lang
         if(state.productos.puertos__embarque__store[params.puertoE] != undefined){
@@ -558,50 +571,63 @@ export default createStore({
           state.productos.embarqueSeleccionadoIm.index = params.puertoE
         }
       }else{
-        console.log(params)
+        //console.log(state.informacionExportacion , 'antes array')
+        //console.log(params)
+        //console.log(state.informacionExportacion.cotizador.longitud, 'antes')
         state.informacionExportacion.cotizador.longitud = state.productos2.longitudes__storeEx[Number(params.long)]
+        //console.log(state.informacionExportacion.cotizador.longitud, 'después')
+        //console.log(state.productos2.longitudes__storeEx[Number(params.long)])
         state.informacionExportacion.cotizador.peso = state.productos2.pesos__storeEx[Number(params.peso)]
+        //console.log(state.productos2.pesos__storeEx[Number(params.peso)])
         state.informacionExportacion.cotizador.volumen = params.vol
+        //console.log(params.vol , 'volumen')
         state.lang = params.lang
         state.informacionExportacion.lang = params.lang
-        if(state.productos2.puertos__llegada__store[params.puertoE] != undefined){
-          //console.log(params.puertoE)
-          //console.log(state.productos2.puertos__llegada__store[params.puertoE], 'puerto')
+        //console.log(state.productos2.puertos__llegada__store[params.puertoE],'destino')
+        if(state.productos2.puertos__llegada__store[params.puertoE] !== undefined){
+          //console.log('Llega acá')
           state.informacionExportacion.cotizador.destino.destino = state.productos2.puertos__llegada__store[params.puertoE]
           state.informacionExportacion.cotizador.destino.destino = state.productos2.puertos__llegada__store[params.puertoE]
-          
-          //console.log(state.informacionExportacion.cotizador.destino.destino)
+
           state.informacionExportacion.cotizador.destino.index = params.puertoE
-          
+          state.informacionExportacion.label = state.label[state.informacionExportacion.cotizador.destino.index]
+
           state.productos2.destinoSeleccionado = state.informacionExportacion.cotizador.destino
-          //console.log(state.productos2.destinoSeleccionado)
           state.productos2.destinoSeleccionado.destino = state.productos2.puertos__llegada__store[params.puertoE]
           state.productos2.destinoSeleccionado.index = params.puertoE
+          //console.log(state.productos2.destinoSeleccionado.destino, 'error')
         }
-        
+        //console.log(state.productos2.destinoSeleccionado , 'destino array')
+        //console.log(state.productos2.destinoSeleccionado.destino , 'destino.destino array')
+        //console.log(state.productos2.destinoSeleccionado.index , 'index destino array')
+        //console.log('Acá tengo los valores')
       }
     },
     setCalcPrecioFleteImportacionParams(state, params){
       if(params.importaciones == 'true'){
         let valorParams = state.informacion.precios.precioFlete[params.puertoE]
+        //console.log(state.informacion.precios.precioFlete[params.puertoE])
         let embarqueArray = []
         if(valorParams != undefined){
           embarqueArray = valorParams.split(' ')
         }
-        state.nuevoValorEmbarque = embarqueArray[1]
+        state.nuevoValorEmbarque = embarqueArray[0]
+        //console.log(state.nuevoValorEmbarque, 'nuevo valor embarque')
         state.informacion.precios.precioFlete = state.nuevoValorEmbarque
+        //console.log(state.informacion.precios.precioFlete, 'precio flete')
+        //console.log(state.nuevoValorEmbarque , 'nuevo valor embarque')
       }else{
         let valorParamsEX = state.informacionExportacion.precios.precioFlete[params.puertoE]
-        console.log(valorParamsEX)
+        //console.log(valorParamsEX)
         let embarqueArray = []
         if(valorParamsEX != undefined){
           embarqueArray = valorParamsEX.split(' ')
-          console.log(embarqueArray[0])
+          //console.log(embarqueArray[0])
         }
         state.nuevoValorDestino = embarqueArray[0]
-        console.log(state.nuevoValorDestino)
+        //console.log(state.nuevoValorDestino)
         state.informacionExportacion.precios.precioFlete = state.nuevoValorDestino
-        console.log(state.nuevoValorDestino)
+        //console.log(state.nuevoValorDestino)
       }
     }
   },
@@ -626,6 +652,7 @@ export default createStore({
       await axios.post(envioImportacion , {informacion}).then((response) => {
         //console.log(response)
         //console.log(response.data.url, 'En axios')
+        console.log(informacion)
         commit('setUrlImportacion', response.data.url)
       })
       .catch(error => console.log(error, 'No funciona getInformacion'))
@@ -713,12 +740,17 @@ export default createStore({
     setParams({commit}, params){
       commit('setParamsMutation', params),
       commit('setCalcPrecioFleteImportacionParams', params)
+      //-----//
       commit('longitudConsulta', params.long)
       commit('cantidadXPrecio', params.vol)
       commit('pesoConsulta', params.peso)
+      
+      //-----//
       commit('longitudConsultaExportacion', params.long)
       commit('cantidadXPrecioExportacion', params.vol)
       commit('pesoConsultaExportacion', params.peso)
+
+      
     },
   },
   modules: {

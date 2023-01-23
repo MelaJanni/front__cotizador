@@ -40,8 +40,8 @@ export default {
         this.getInformacion(this.informacion)
         this.$router.push('/detalles/importaciones')
       }else{
-        console.log('entra al else importacion')
-        console.log(this.informacion.cotizador.embarque)
+        //console.log('entra al else importacion')
+        //console.log(this.informacion.cotizador.embarque)
       }
     },
     cambiarEspanol(){
@@ -54,7 +54,7 @@ export default {
   computed:{
     ...mapState(['informacion', 'informacion.subtotal', 'lang', 'alertDanger', 'validacion'])
   },
-  mounted(){
+  created(){
     this.limpiarFormImportaciones()
   }
 }
