@@ -94,6 +94,10 @@ export default{
       localStorage : ''
     }
   },
+  created(){
+    this.getExportaciones()
+    this.getImportaciones()
+  },
   beforeMount(){
     this.getImportaciones().then(() => {
       if(this.$route.query != undefined && this.$route.query.importaciones!=undefined){
@@ -101,16 +105,14 @@ export default{
         this.LocalStorage()
       }
       this.preguntaRuta()
-    }
-    )
-
+    })
     this.getExportaciones().then(() => {
-      if(this.$route.query != undefined && this.$route.query.importaciones != undefined){
+      if(this.$route.query != undefined && this.$route.query.importaciones!=undefined){
+      //console.log('entro a la condicion de tener parametros')
         this.LocalStorage()
       }
-        this.preguntaRuta()
-      }
-    )
+      this.preguntaRuta()
+    })
   },
   computed:{
     ...mapState(['cotizador', 'informacion', 'informacionExportacion', 'productos', 'productos2', 'parametros', 'label']),
@@ -193,7 +195,7 @@ export default{
           this.$router.push('/exportaciones')
         }
       }else if (this.$route.query === ''){
-        return
+        console.log('vacio')
       }
     },
     LocalStorage(){

@@ -13,7 +13,7 @@
                       <div class="col-12 col-lg-5  d-flex justify-content-between align-items-center px-0">
                         <p v-if="calcularRuta">{{ $t("message.puertoEmbarque", {}, { locale: $store.state.lang }) }}</p>
                         <p  v-else>{{ $t("message.puertoDestino", {}, { locale: $store.state.lang }) }}</p>
-                        <h4 v-if="calcularRuta">{{$store.state.productos.embarqueSeleccionadoIm.embarque}}</h4>
+                        <h4 v-if="calcularRuta">{{$store.state.informacion.cotizador.embarque.embarque}}</h4>
                         <h4 v-else>{{$store.state.informacionExportacion.cotizador.destino.destino}}</h4>
                       </div>
                   </div>
@@ -21,12 +21,12 @@
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
                   <img src="../../../public/img/cotizador_icons/ltl.svg" alt="">
                   <p v-if=" calcularRuta">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
-                  <p v-else-if="$store.state.label[$store.state.informacionExportacion.cotizador.destino.index] == 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
-                  <p v-else="$store.state.label[$store.state.informacionExportacion.cotizador.destino.index] == 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else-if="$store.state.informacionExportacion.cotizador.destino.index === 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else="$store.state.informacionExportacion.cotizador.destino.index === 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
                 </div>
                 <div class="col-12 col-lg-5 mt-3 mt-lg-0  d-flex justify-content-between align-items-center px-0">
                   <p>{{ $t("message.volumen2", {}, { locale: $store.state.lang }) }}</p>
-                  <h4 v-if="calcularRuta">{{$store.state.productos.volumenSeleccionado}}</h4>
+                  <h4 v-if="calcularRuta">{{$store.state.informacion.cantidad.cantidadVolumen}}</h4>
                   <h4 v-else>{{$store.state.informacionExportacion.cantidad.cantidadVolumen}}</h4>
                 </div>
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
@@ -69,7 +69,7 @@
                 <div class="row gris_claro mt-3">
                     <div class="col-4 div_gris"><p>{{ $t("message.flete", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
-                      <p v-if="calcularRuta">{{$store.state.productos.volumenSeleccionado}}</p>
+                      <p v-if="calcularRuta">{{$store.state.informacion.cantidad.cantidadVolumen}}</p>
                       <p v-else>{{$store.state.informacionExportacion.cantidad.cantidadVolumen}}</p>
                     </div>
                     <div class="col-2 div_gris">
@@ -84,7 +84,7 @@
                 <div class="row gris_claro" v-if="calcularRuta">
                     <div class="col-4 div_gris"><p>{{ $t("message.desconsolidacion", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
-                      <p>{{$store.state.productos.volumenSeleccionado}}</p>
+                      <p>{{$store.state.informacion.cantidad.cantidadVolumen}}</p>
                     </div>
                     <div class="col-2 div_gris">
                       <h6>$ {{$store.state.informacion.precios.precioVolumen}}</h6>
@@ -97,7 +97,7 @@
                 <div class="row gris_claro">
                     <div class="col-4 div_gris"><p>{{ $t("message.sobreDim", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
-                      <p v-if="calcularRuta">{{$store.state.productos.longitudSeleccionada}}</p>
+                      <p v-if="calcularRuta">{{$store.state.informacion.cantidad.cantidadLongitud}}</p>
                       <p v-else>{{$store.state.informacionExportacion.cantidad.cantidadLongitud}}</p>
                     </div>
                     <div class="col-2 div_gris">
@@ -112,7 +112,7 @@
                 <div class="row gris_claro mb-3">
                     <div class="col-4 div_gris"><p>{{ $t("message.sobrePeso", {}, { locale: $store.state.lang }) }}</p></div>
                     <div class="col-3 div_gris">
-                      <p v-if="calcularRuta">{{$store.state.productos.pesoSeleccionado}}</p>
+                      <p v-if="calcularRuta">{{$store.state.informacion.cantidad.cantidadPeso}}</p>
                       <p v-else>{{$store.state.informacionExportacion.cantidad.cantidadPeso}}</p>
                     </div>
                     <div class="col-2 div_gris">
@@ -180,11 +180,11 @@ export default{
   },
   methods: {
     abrirPdfImport(){
-      //console.log(this.urlImportacion)
+      console.log(this.urlImportacion)
       window.open(this.urlImportacion, '_blank');
     },
     abrirPdfExport(){
-      //console.log(this.urlExportacion)
+      console.log(this.urlExportacion)
       window.open(this.urlExportacion, '_blank');
     },
   },

@@ -37,6 +37,7 @@ export default {
       this.validarImportaciones()
       if(this.validacion == true){
         this.getSubtotal(this.informacion.subtotal)
+        this.informacion.precios.precioFlete = this.nuevoValorEmbarque
         this.getInformacion(this.informacion)
         this.$router.push('/detalles/importaciones')
       }else{
@@ -52,11 +53,8 @@ export default {
     },
   },
   computed:{
-    ...mapState(['informacion', 'informacion.subtotal', 'lang', 'alertDanger', 'validacion'])
+    ...mapState(['informacion', 'informacion.subtotal', 'lang', 'alertDanger', 'validacion', 'nuevoValorEmbarque'])
   },
-  created(){
-    this.limpiarFormImportaciones()
-  }
 }
 </script>
 <style lang="scss">

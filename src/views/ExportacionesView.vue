@@ -31,12 +31,15 @@ export default {
     CotizadorModal
   },
   methods:{
-    ...mapActions(['getInformacionExportacion', 'getSubtotalExportacion', 'getEspanol', 'getEnglish', 'limpiarFormExportaciones', 'validarExportaciones']),
+    ...mapActions(['getInformacionExportacion', 'getSubtotalExportacion', 'getEspanol', 'getEnglish', 'validarExportaciones', 'limpiarFormExportaciones']),
     procesar2(){
       this.validarExportaciones()
       if ( this.validacion == true){
         this.getSubtotalExportacion(this.informacionExportacion.subtotal)
-        //this.informacionExportacion.label = this.label[this.informacionExportacion.cotizador.destino.index]
+        console.log(this.informacionExportacion.label)
+        console.log(this.informacionExportacion.cotizador.destino.index)
+        this.informacionExportacion.label = this.informacionExportacion.cotizador.destino.index
+        this.informacionExportacion.precios.precioFlete = this.nuevoValorDestino
         this.getInformacionExportacion(this.informacionExportacion)
         console.log(this.informacionExportacion)
         this.$router.push('/detalles/exportaciones')
@@ -52,7 +55,7 @@ export default {
     },
   },
   computed:{
-    ...mapState(['informacionExportacion', 'informacionExportacion.subtotal', 'alertDanger', 'validacion', 'label', 'productos2'])
+    ...mapState(['informacionExportacion', 'informacionExportacion.subtotal', 'alertDanger', 'validacion', 'label', 'productos2', 'nuevoValorDestino'])
   },
 }
 </script>
