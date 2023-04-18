@@ -36,9 +36,11 @@ export default {
       this.validarExportaciones()
       if ( this.validacion == true){
         this.getSubtotalExportacion(this.informacionExportacion.subtotal)
-        console.log(this.informacionExportacion.label)
+        console.log(this.informacionExportacion.label[this.informacionExportacion.cotizador.destino.index])
+        //console.log(this.informacionExportacion.cotizador.destino.index)
+        this.informacionExportacion.label[this.informacionExportacion.cotizador.destino.index]
+        this.informacionExportacion.label = this.informacionExportacion.label[this.informacionExportacion.cotizador.destino.index]
         console.log(this.informacionExportacion.cotizador.destino.index)
-        this.informacionExportacion.label = this.informacionExportacion.cotizador.destino.index
         this.informacionExportacion.precios.precioFlete = this.nuevoValorDestino
         this.getInformacionExportacion(this.informacionExportacion)
         console.log(this.informacionExportacion)

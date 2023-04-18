@@ -1,0 +1,19 @@
+
+
+{
+    "https://expertmonkeys.com/back/api/info_importaciones.php" : "",
+    "long_max": ["1000", "3", "5"],
+    "long_precio": ["0", "350", "Por confirmar"],
+    "peso": ["5", "6", "8"],
+    "peso_precio": ["0", "750", "Por confirmar"],
+    "precioFlete": ["205", "205", "205", "205", "205", "205", "205", "205", "158", "205", "170", "205", "195", "221", "176", "211", "211", "211", "211", "249"],
+    "puertos_llegada": ["Puerto Cabello", "Barranquilla", "Cartagena", "Rio Haina", "Caucedo", "Bridgetown", "Willemstad", "Oranjestad", "Port au Prince", "Panamaribo",    "Georgetown", "San Juan", "Port Spain", "Point Lisas", "Kingston","San Pedro Sula","Tegucigalpa","San Salvador","Guatemala City","Managua"
+    ],
+    "volumen": 1500,
+    "longitudes__storeEx": ["1000","3","5"],
+    "pesos__storeEx": ["5","6","8"],
+    "precioVolumenStoreEx": 1500,
+    "precios__longitud__storeEx": ["0","350","Por confirmar"],
+    "precios__peso__storeEx": ["0","750","Por confirmar"],
+    "puertos__llegada__store": ["Puerto Cabello","Barranquilla","Cartagena","Rio Haina","Caucedo","Bridgetown","Willemstad","Oranjestad","Port au Prince","Panamaribo","Georgetown","San Juan","Port Spain","Point Lisas","Kingston"]
+  }

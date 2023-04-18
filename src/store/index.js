@@ -181,8 +181,8 @@ export default createStore({
       state.productos2.precioVolumenStoreEx = data[0].volumen
       //console.log(state.productos2.precioVolumenStoreEx)
       state.informacionExportacion.precios.precioFlete = data[0].precioFlete
-      state.label = data[0].label
-      //console.log(data[0].label)
+      state.informacionExportacion.label = data[0].tipoCarga
+      //console.log( state.informacionExportacion.label , 'state label')
       //console.log(state.informacionExportacion.label = data[0].label[state.productos2.destinoSeleccionado.index])
       //console.log(data, 'data exportaciones')
     },
@@ -628,24 +628,23 @@ export default createStore({
     async getImportaciones({commit}){
       await axios.get(API__importaciones).then((response) => {
         commit('setImportaciones', response.data)
-        //console.log(response.data , 'data importaciones')
+        //console.log(response.data[0] , 'data importaciones 1')
       })
       .catch(error => console.log(error))
     },
     async getExportaciones({commit}){
       await axios.get(API__exportaciones).then((response) => {
         commit('setExportaciones', response.data)
-        console.log(response.data, 'data exportaciones')
+        console.log(response.data[0], 'data exportaciones 1')
       })
       .catch(error => console.log(error))
     },
     async getInformacion({commit} , informacion){
-      //console.log(informacion)
+      console.log(informacion)
       commit('setLang')  
       await axios.post(envioImportacion , {informacion}).then((response) => {
-        //console.log(response)
-        //console.log(response.data.url, 'En axios')
-        //console.log(informacion)
+        console.log(response)
+        console.log(informacion)
         commit('setUrlImportacion', response.data.url)
       })
       .catch(error => console.log(error, 'No funciona getInformacion'))
@@ -658,6 +657,7 @@ export default createStore({
       //console.log(informacion, ' informacion')
       await axios.post(envioExportacion , informacion).then((response) => {
         console.log(response.data)
+        console.log(informacion)
         commit('setUrlExportacion', response.data.url)
       }) 
       .catch(error => console.log(error, 'No funciona getInformacionExportacion'))
@@ -665,14 +665,14 @@ export default createStore({
     async getTerminosImportaciones({commit}){
       await axios.get(terminosImp).then((response) => {
        commit('setTerminos', response.data)
-       //console.log(response.data , 'terminos importaciones')
+       console.log(response.data , 'terminos importaciones')
      })
      .catch(error => console.log(error, 'No funciona terminosImportaciones'))
     },
     async getTerminosExportaciones({commit}){
       axios.get(terminosEx).then((response) => {
       commit('setTerminosExports', response.data)
-      //console.log(response.data)
+      console.log(response.data)
     })
     .catch(error => console.log(error, 'No funciona terminosImportaciones'))
     },

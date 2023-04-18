@@ -21,8 +21,8 @@
                 <div class="col-12 col-lg-7 d-flex justify-content-start align-items-center mt-4 px-0">
                   <img src="../../../public/img/cotizador_icons/ltl.svg" alt="">
                   <p v-if=" calcularRuta">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
-                  <p v-else-if="$store.state.informacionExportacion.cotizador.destino.index === 'LTL'">{{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
-                  <p v-else="$store.state.informacionExportacion.cotizador.destino.index === 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else-if="$store.state.informacionExportacion.label === 'LTL'"> {{ $t("message.ltl", {}, { locale: $store.state.lang }) }}</p>
+                  <p v-else="$store.state.informacionExportacion.label === 'LCL'">{{ $t("message.lcl", {}, { locale: $store.state.lang }) }}</p>
                 </div>
                 <div class="col-12 col-lg-5 mt-3 mt-lg-0  d-flex justify-content-between align-items-center px-0">
                   <p>{{ $t("message.volumen2", {}, { locale: $store.state.lang }) }}</p>
